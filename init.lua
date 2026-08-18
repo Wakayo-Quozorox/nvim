@@ -912,7 +912,7 @@ do
   vim.pack.add { { src = gh 'nvim-treesitter/nvim-treesitter', version = 'main' } }
 
   -- Ensure basic parsers are installed
-  local parsers = { 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc' }
+  local parsers = { 'bash', 'c', 'cpp', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc' }
   require('nvim-treesitter').install(parsers)
 
   ---@param buf integer
@@ -958,6 +958,14 @@ do
       end
     end,
   })
+
+  -- Pins the enclosing function/struct/class at the top of the window as you
+  -- scroll past it, like VSCode's "sticky scroll". Works via treesitter, so
+  -- it covers c/cpp as soon as their parsers are installed above.
+  vim.pack.add { gh 'nvim-treesitter/nvim-treesitter-context' }
+  require('treesitter-context').setup {
+    max_lines = 3, -- limit how many context lines can stack up
+  }
 end
 
 -- ============================================================
